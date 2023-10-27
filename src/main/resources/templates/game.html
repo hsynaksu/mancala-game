@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <style>
+        .pit {
+            border: 1px solid #ccc;
+            border-radius: 24px;
+            padding: 24px;
+            width: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-pit {
+            margin-bottom: 24px;
+        }
+
+        .right-pit {
+            margin-top: 24px;
+        }
+
+        .pit-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .divider {
+            border: 1px solid #ccc;
+            margin: 8px;
+        }
+
+        .board {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: "Roboto", sans-serif;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="content">
+    <h1>Mancala Game</h1>
+    <h2 th:if="${winner == null}">Current Player: <span th:text="${currentPlayer}">-</span></h2>
+    <h1 th:if="${winner}">Winner: <span th:text="${winner}">-</span></h1>
+
+    <div class="board">
+        <div class="pit-row">
+            <div class="pit left-pit" th:text="${board.player2BigPit}">
+                0
+            </div>
+            <form action="#" method="post" th:action="select-pit">
+                <div class="pit-row" style="flex-direction: row-reverse">
+                    <button
+                            class="pit"
+                            name="pitIndex"
+                            th:disabled="${currentPlayer != T(com.aksu.mancalagame.mancala.domain.Player).PLAYER2 || pit == 0}"
+                            th:each="pit, iteration : ${board.player2pits}"
+                            th:text="${pit}"
+                            th:value="${iteration.index}"
+                    >
+                        0
+                    </button>
+                </div>
+                <div class="divider"></div>
+                <div class="pit-row">
+                    <button
+                            class="pit"
+                            name="pitIndex"
+                            th:disabled="${currentPlayer != T(com.aksu.mancalagame.mancala.domain.Player).PLAYER1 || pit == 0}"
+                            th:each="pit, iteration : ${board.player1pits}"
+                            th:text="${pit}"
+                            th:value="${iteration.index}"
+                    >
+                        0
+                    </button>
+                </div>
+            </form>
+            <div class="pit right-pit" th:text="${board.player1BigPit}">
+                0
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
